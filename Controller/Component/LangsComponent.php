@@ -3,7 +3,13 @@
 
 class LangsComponent extends Component 
 {
-
+  private $__locales = array(
+      'spa' => 'es_ES',
+      'eus' => 'eu_ES',
+      'fre' => 'fr_FR',
+      'deu' => 'de_DE'
+  );
+  
   public function initialize( Controller $controller, $settings = array()) 
   {
     if( isset( $controller->request->params ['lang']))
@@ -22,14 +28,20 @@ class LangsComponent extends Component
   {
     App::uses( 'L10n', 'I18n');
     $L10n = new L10n();
-    $languages = Configure::read( 'Config.languages');
+    $language = Configure::read( 'Config.languages');
     $lang = Configure::read( 'Config.language');
 
-    if( !$lang)
+    if( !$language)
     {
-      $lang = $L10n->get();
-      $locale_catalog = $L10n->catalog( $lang);
+      $language = $L10n->get();
+      $locale_catalog = $L10n->catalog( $language);
       Configure::write( 'Config.language', $locale_catalog ['locale']);
+      $lang = $locale_catalog ['locale'];
+    }
+    
+    if( isset( $this->__locales [$lang]))
+    {
+      setlocale( LC_ALL, $this->__locales [$lang]);
     }
   }
 }
