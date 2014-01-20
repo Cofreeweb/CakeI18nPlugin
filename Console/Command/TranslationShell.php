@@ -14,7 +14,7 @@ class TranslationShell extends AppShell
 /**
  * Añade un campo a un model
  *
- * @example Console/cake i18n.translation addfield
+ * @example bin/cake i18n.translation addfield
 */
   function addfield()
   {

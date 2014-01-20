@@ -145,7 +145,15 @@ class I18nHelper extends AppHelper {
 		$langData = $this->_getCatalog()->catalog($code);
 		return $langData['language'];
 	}
-
+  
+  public function getDBName( $iso3) 
+  {
+    $Locale = ClassRegistry::init( 'I18n.Locale');
+    return $Locale->field( 'name', array(
+        'Locale.iso3' => $iso3
+    ));
+  }
+  
 /**
  * Returns a L10n instance
  *
