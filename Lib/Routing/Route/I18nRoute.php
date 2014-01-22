@@ -43,18 +43,18 @@ class I18nRoute extends CakeRoute {
  * @return void
  */
 	public function __construct($template, $defaults = array(), $options = array()) {
+		App::import('Core', 'L10n');
+		$this->L10n = new L10n();
+		
 		if (strpos($template, ':lang') === false && empty($options['disableAutoNamedLang'])) {
 			Router::connect(
 				$template,
-				$defaults + array('lang' => DEFAULT_LANGUAGE),
+				$defaults + array('lang' => $locale = $this->L10n->map( DEFAULT_LANGUAGE)),
 				array('disableAutoNamedLang' => true, 'routeClass' => $this->name) + $options
 			);
 			$options += array('__promote' => true);
 			$template = '/:lang' . $template;
 		}
-		
-		App::import('Core', 'L10n');
-		$this->L10n = new L10n();
 		
 		$locales = array();
 		
@@ -111,9 +111,11 @@ class I18nRoute extends CakeRoute {
 			unset($params['named']['lang']);
 		}
 		if ($params !== false && array_key_exists('lang', $params)) {
-			$params['lang'] = empty($params['lang']) ? DEFAULT_LANGUAGE :  $params['lang'];
-			$locale = $this->L10n->map( $params['lang']);
-			Configure::write('Config.language', $locale);
+			$lang = empty($params['lang']) ? DEFAULT_LANGUAGE :  $params['lang'];
+			$locale = $this->L10n->map( $lang);
+			Configure::write('Config.language', $lang);
+		} else {
+		  Configure::write('Config.language', DEFAULT_LANGUAGE);
 		}
 		return $params;
 	}
