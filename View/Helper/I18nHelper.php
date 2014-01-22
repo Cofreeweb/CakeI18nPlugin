@@ -33,6 +33,36 @@ class I18nHelper extends AppHelper {
  */
 	public $basePath = '/i18n/img/flags/';
 	
+	
+	public function nav()
+  {
+    $locales = Configure::read( 'Config.languages');
+    
+    if( count( $locales) < 2)
+    {
+      return;
+    }
+    
+    $out = array();
+    
+    foreach( $locales as $locale)
+    {
+      if( $locale ['iso3'] != Configure::read( 'Config.language'))
+      {
+        $url = $this->Html->url( array(
+            'lang' => $locale ['iso3']
+        ));
+        
+        $out [$url] = $locale ['name'];
+      }
+    }
+    
+    
+    return $this->_View->element( 'navs/nav_locale', array(
+        'locales' => $out
+    ));
+  }
+	
 /**
  * Displays a list of flags
  * 

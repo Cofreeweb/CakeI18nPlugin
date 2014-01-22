@@ -53,8 +53,19 @@ class I18nRoute extends CakeRoute {
 			$template = '/:lang' . $template;
 		}
 		
+		App::import('Core', 'L10n');
+		$this->L10n = new L10n();
+		
+		$locales = array();
+		
+		foreach( Configure::read('Config.languages') as $locale)
+		{
+		  Configure::read('Config.languages');
+		  $locales [] = $this->L10n->map( $locale);
+		}
+		
 		$options = array_merge((array)$options, array(
-			'lang' => join('|', Configure::read('Config.languages')),
+			'lang' => join('|', $locales),
 		));
 		unset($options['disableAutoNamedLang']);
 		
@@ -101,7 +112,8 @@ class I18nRoute extends CakeRoute {
 		}
 		if ($params !== false && array_key_exists('lang', $params)) {
 			$params['lang'] = empty($params['lang']) ? DEFAULT_LANGUAGE :  $params['lang'];
-			Configure::write('Config.language', $params['lang']);
+			$locale = $this->L10n->map( $params['lang']);
+			Configure::write('Config.language', $locale);
 		}
 		return $params;
 	}
