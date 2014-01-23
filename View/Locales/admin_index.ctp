@@ -13,13 +13,13 @@
   	<? foreach ($contents as $content): ?>
   	  <tbody>
     	  <tr>
-      		<td><?= h($content['Locale']['id']); ?>&nbsp;</td>
-      		<td><?= h($content['Locale']['name']); ?>&nbsp;</td>
+      		<td><?= h($content['Language']['id']); ?>&nbsp;</td>
+      		<td><?= h($content['Language']['name']); ?>&nbsp;</td>
       		<td class="">
       		 	<div class="visible-md visible-lg hidden-sm hidden-xs btn-group">
 							<?= $this->Html->link( '<i class="icon-pencil bigger-120"></i>', array(
       			      'action' => 'edit',
-      			      $content ['Locale']['id']
+      			      $content ['Language']['id']
       			  ), array(
       			      'class' => 'btn btn-xs btn-success',
       			      'escape' => false
@@ -27,7 +27,7 @@
       			  
       			  <?= $this->Html->link( '<i class="icon-trash bigger-120"></i>', array(
       			      'action' => 'delete',
-      			      $content ['Locale']['id']
+      			      $content ['Language']['id']
       			  ), array(
       			      'class' => 'btn btn-xs btn-danger',
       			      'escape' => false

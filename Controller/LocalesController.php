@@ -9,6 +9,8 @@ class LocalesController extends I18nAppController
 {
   public $components = array( 'Paginator');
   
+  public $uses = array( 'I18n.Language');
+  
   public function beforeFilter()
   {
     parent::beforeFilter();
@@ -17,7 +19,7 @@ class LocalesController extends I18nAppController
   
   public function admin_index() 
 	{
-		$this->Locale->recursive = 0;
+		$this->Language->recursive = 0;
 		$this->set( 'contents', $this->Paginator->paginate());
 	}
 
@@ -27,13 +29,13 @@ class LocalesController extends I18nAppController
 	  
 		if( $this->request->is('post')) 
 		{
-			$this->Locale->create();
+			$this->Language->create();
 			
-			if( $this->Locale->save( $this->request->data)) 
+			if( $this->Language->save( $this->request->data)) 
 			{
 				$this->redirect( array(
 				    'action' => 'edit',
-				    $this->Locale->id
+				    $this->Language->id
 				));
 			} 
 			else 
@@ -47,18 +49,18 @@ class LocalesController extends I18nAppController
 	{
 	  $this->__setCatalog();
 	  
-		if( !$this->Locale->exists( $id)) 
+		if( !$this->Language->exists( $id)) 
 		{
 			throw new NotFoundException( __('Invalid article'));
 		}
 		
 		if( $this->request->is( array( 'post', 'put'))) 
 		{
-			if( $this->Locale->save($this->request->data)) 
+			if( $this->Language->save($this->request->data)) 
 			{
 				$this->redirect( array(
 				    'action' => 'edit',
-				    $this->Locale->id
+				    $this->Language->id
 				));
 			} 
 			else 
@@ -68,8 +70,8 @@ class LocalesController extends I18nAppController
 		} 
 		else 
 		{
-			$options = array('conditions' => array('Locale.' . $this->Locale->primaryKey => $id));
-			$this->request->data = $this->Locale->find( 'first', $options);
+			$options = array('conditions' => array('Language.' . $this->Language->primaryKey => $id));
+			$this->request->data = $this->Language->find( 'first', $options);
 		}
 	}
 
@@ -82,16 +84,16 @@ class LocalesController extends I18nAppController
  */
 	public function admin_delete($id = null) 
 	{
-		$this->Locale->id = $id;
+		$this->Language->id = $id;
 		
-		if( !$this->Locale->exists()) 
+		if( !$this->Language->exists()) 
 		{
 			throw new NotFoundException(__('Invalid article'));
 		}
 		
 		$this->request->onlyAllow('post', 'delete');
 		
-		if( $this->Locale->delete()) 
+		if( $this->Language->delete()) 
 		{
 			$this->Session->setFlash(__('The article has been deleted.'));
 		} 

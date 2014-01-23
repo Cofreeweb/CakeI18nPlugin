@@ -5,8 +5,8 @@ $tables = $db->listSources();
 
 if( in_array( 'locales', $tables))
 {
-  App::uses('Locale', 'I18n.Model');
+  App::uses('Language', 'I18n.Model');
 
-  $Locale = new Locale();
-  $Locale->configure();
+  $Language = new Language();
+  $Language->configure();
 }
