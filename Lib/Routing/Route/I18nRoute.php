@@ -115,6 +115,7 @@ class I18nRoute extends CakeRoute {
 			$locale = $this->L10n->map( $lang);
 			Configure::write('Config.language', $lang);
 		} else {
+      // $params['lang'] = DEFAULT_LANGUAGE;
 		  Configure::write('Config.language', DEFAULT_LANGUAGE);
 		}
 		return $params;

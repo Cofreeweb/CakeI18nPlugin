@@ -37,7 +37,7 @@ class I18nHelper extends AppHelper {
 	public function nav()
   {
     $locales = Configure::read( 'Config.languages');
-    
+
     if( count( $locales) < 2)
     {
       return;
@@ -45,22 +45,22 @@ class I18nHelper extends AppHelper {
     
     $out = array();
     
+    App::import('Core', 'L10n');
+		$this->L10n = new L10n();
+		
     foreach( $locales as $locale)
     {
-      if( $locale ['iso3'] != Configure::read( 'Config.language'))
+      $map = $this->L10n->map( $locale);
+
+      if( $map != Configure::read( 'Config.language'))
       {
-        $url = $this->Html->url( array(
-            'lang' => $locale ['iso3']
-        ));
-        
-        $out [$url] = $locale ['name'];
+        $language = $this->getDBName( $locale);
+        $url = '/'. $map . str_replace( '/' . $this->request->params ['lang'], '', $this->request->here);
+        $out [] = $this->Html->tag( 'li', $this->Html->link( $language, $url));
       }
     }
     
-    
-    return $this->_View->element( 'navs/nav_locale', array(
-        'locales' => $out
-    ));
+    return $this->Html->tag( 'ul', implode( "\n", $out));
   }
 	
 /**
