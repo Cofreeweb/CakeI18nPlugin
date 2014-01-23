@@ -12,6 +12,30 @@ class LangsComponent extends Component
   
   public function initialize( Controller $controller, $settings = array()) 
   {
+    if( !isset( $controller->request->params ['lang']))
+    {
+      return;
+    }
+    
+    App::import('Core', 'L10n');
+		$L10n = new L10n();
+		
+    $lang = $controller->request->params ['lang'];
+
+    if( empty( $lang))
+    {
+      $lang = $L10n->get();
+      $locale = $L10n->map( $lang);
+
+      if( in_array( $locale, Configure::read( 'Config.languages')))
+  		{
+  		  $controller->redirect( Router::url( '/'. $lang . $controller->request->here, true));
+        // $response->send();
+  		}
+    }
+
+	  Configure::write('Config.language', DEFAULT_LANGUAGE);
+	  
     if( isset( $controller->request->params ['lang']))
     {
       Configure::write( 'Config.language', $controller->request->params ['lang']);
