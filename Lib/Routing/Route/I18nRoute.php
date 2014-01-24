@@ -86,7 +86,7 @@ class I18nRoute extends CakeRoute {
  */
 	public function match($url) {
 		if (empty($url['lang'])) {
-			$url['lang'] = Configure::read('Config.language');
+			$url['lang'] = $this->L10n->map( Configure::read('Config.language'));
 		}
 		
 		$parentMatch = parent::match($url);

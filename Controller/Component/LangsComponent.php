@@ -38,7 +38,7 @@ class LangsComponent extends Component
 	  
     if( isset( $controller->request->params ['lang']))
     {
-      Configure::write( 'Config.language', $controller->request->params ['lang']);
+      Configure::write( 'Config.language', $L10n->map( $controller->request->params ['lang']));
     }
     
     $this->__setLanguage();
@@ -55,7 +55,7 @@ class LangsComponent extends Component
     $L10n = new L10n();
     $language = Configure::read( 'Config.languages');
     $lang = Configure::read( 'Config.language');
-
+    
     if( !$language)
     {
       $language = $L10n->get();
