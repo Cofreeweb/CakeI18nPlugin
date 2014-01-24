@@ -55,7 +55,7 @@ class I18nHelper extends AppHelper {
       if( $map != Configure::read( 'Config.language'))
       {
         $language = $this->getDBName( $locale);
-        $url = '/'. $map . str_replace( '/' . $this->request->params ['lang'], '', $this->request->here);
+        $url = '/'. $this->L10n->map( $map) . str_replace( '/' . $this->request->params ['lang'], '', $this->request->here);
         $out [] = $this->Html->tag( 'li', $this->Html->link( $language, $url));
       }
     }
