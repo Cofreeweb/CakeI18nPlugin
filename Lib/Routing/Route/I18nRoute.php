@@ -49,7 +49,7 @@ class I18nRoute extends CakeRoute {
 		if (strpos($template, ':lang') === false && empty($options['disableAutoNamedLang'])) {
 			Router::connect(
 				$template,
-				$defaults + array('lang' => $locale = ''),
+				$defaults + array('lang' => $locale = $this->L10n->map( DEFAULT_LANGUAGE)),
 				array('disableAutoNamedLang' => true, 'routeClass' => $this->name) + $options
 			);
 			$options += array('__promote' => true);
@@ -108,7 +108,7 @@ class I18nRoute extends CakeRoute {
  */
 	public function parse($url) {
 		$params = parent::parse($url);
-
+		
 		if (!empty($params['named']['lang'])) {
 			$params['lang'] = $params['named']['lang'];
 			unset($params['named']['lang']);

@@ -12,7 +12,7 @@ class LangsComponent extends Component
   
   public function initialize( Controller $controller, $settings = array()) 
   {
-    if( !isset( $controller->request->params ['lang']))
+    if( !isset( $controller->request->params ['lang']) && $controller->request->here != '/')
     {
       return;
     }
@@ -20,17 +20,17 @@ class LangsComponent extends Component
     App::import('Core', 'L10n');
 		$L10n = new L10n();
 		
-    $lang = $controller->request->params ['lang'];
+    $lang = @$controller->request->params ['lang'];
 
     if( empty( $lang))
     {
       $lang = $L10n->get();
       $locale = $L10n->map( $lang);
 
-      if( in_array( $locale, Configure::read( 'Config.languages')))
+      if( !isset( $controller->request ['admin']) && in_array( $locale, Configure::read( 'Config.languages')))
   		{
   		  $controller->redirect( Router::url( '/'. $lang . $controller->request->here, true));
-        // $response->send();
+        $response->send();
   		}
     }
 
@@ -40,6 +40,7 @@ class LangsComponent extends Component
     {
       Configure::write( 'Config.language', $controller->request->params ['lang']);
     }
+    
     $this->__setLanguage();
   }
   
@@ -62,7 +63,7 @@ class LangsComponent extends Component
       Configure::write( 'Config.language', $locale_catalog ['locale']);
       $lang = $locale_catalog ['locale'];
     }
-    
+
     if( isset( $this->__locales [$lang]))
     {
       setlocale( LC_ALL, $this->__locales [$lang]);
