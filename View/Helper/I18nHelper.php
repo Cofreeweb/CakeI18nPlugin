@@ -50,7 +50,7 @@ class I18nHelper extends AppHelper {
 		
     foreach( $locales as $locale)
     {
-      $map = $this->L10n->map( $locale);
+      $map = $locale;
 
       if( $map != Configure::read( 'Config.language'))
       {
