@@ -12,28 +12,34 @@ class LangsComponent extends Component
   
   public function initialize( Controller $controller, $settings = array()) 
   {
-    if( !isset( $controller->request->params ['lang']) && $controller->request->here != '/')
-    {
-      return;
-    }
-    
+    // if( !isset( $controller->request->params ['lang']) && $controller->request->here != '/')
+    // {
+    //   return;
+    // }
+    // 
     App::import('Core', 'L10n');
 		$L10n = new L10n();
 		
     $lang = @$controller->request->params ['lang'];
-
-    if( empty( $lang))
+    
+    if( empty( $lang) || strpos( $controller->request->here, '/'. $lang .'/') === false)
     {
       $lang = $L10n->get();
       $locale = $L10n->map( $lang);
-
+      
+      if( !in_array( $locale, Configure::read( 'Config.languages')))
+      {
+        $locale = DEFAULT_LANGUAGE; 
+        $lang = $L10n->map( $locale);
+      }
+      
       if( !isset( $controller->request ['admin']) && in_array( $locale, Configure::read( 'Config.languages')))
   		{
   		  $controller->redirect( Router::url( '/'. $lang . $controller->request->here, true));
         $response->send();
   		}
     }
-
+    
 	  Configure::write('Config.language', DEFAULT_LANGUAGE);
 	  
     if( isset( $controller->request->params ['lang']))
@@ -53,7 +59,7 @@ class LangsComponent extends Component
   {
     App::uses( 'L10n', 'I18n');
     $L10n = new L10n();
-    $language = Configure::read( 'Config.languages');
+    $language = Configure::read( 'Config.language');
     $lang = Configure::read( 'Config.language');
     
     if( !$language)
