@@ -90,9 +90,7 @@ class LocalesController extends I18nAppController
 		{
 			throw new NotFoundException(__('Invalid article'));
 		}
-		
-		$this->request->onlyAllow('post', 'delete');
-		
+				
 		if( $this->Language->delete()) 
 		{
 			$this->Session->setFlash(__('The article has been deleted.'));
