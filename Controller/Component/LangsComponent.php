@@ -32,10 +32,11 @@ class LangsComponent extends Component
         $locale = DEFAULT_LANGUAGE; 
         $lang = $L10n->map( $locale);
       }
-      
-      if( strpos( $controller->request->here, '.css') === false 
-          && empty( $controller->request->params ['ext']) 
-          && !isset( $controller->request ['admin']) && $controller->request->controller != 'crud' && in_array( $locale, Configure::read( 'Config.languages')))
+
+      // if( strpos( $controller->request->here, '.css') === false 
+      //     && empty( $controller->request->params ['ext']) 
+      //     && !isset( $controller->request ['admin']) && $controller->request->controller != 'crud' && in_array( $locale, Configure::read( 'Config.languages')))
+  		if( $controller->request->here == '/')
   		{
   		  $controller->redirect( Router::url( '/'. $lang . $controller->request->here, true));
         $response->send();
