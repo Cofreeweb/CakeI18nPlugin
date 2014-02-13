@@ -51,7 +51,7 @@ class LocalesController extends I18nAppController
 	  
 		if( !$this->Language->exists( $id)) 
 		{
-			throw new NotFoundException( __('Invalid article'));
+			throw new NotFoundException( 'Invalid article');
 		}
 		
 		if( $this->request->is( array( 'post', 'put'))) 
@@ -65,7 +65,7 @@ class LocalesController extends I18nAppController
 			} 
 			else 
 			{
-				$this->Session->setFlash(__('The article could not be saved. Please, try again.'));
+				$this->Session->setFlash( 'The article could not be saved. Please, try again.');
 			}
 		} 
 		else 
@@ -88,12 +88,12 @@ class LocalesController extends I18nAppController
 		
 		if( !$this->Language->exists()) 
 		{
-			throw new NotFoundException(__('Invalid article'));
+			throw new NotFoundException(  'Invalid article');
 		}
 				
 		if( $this->Language->delete()) 
 		{
-			$this->Session->setFlash(__('The article has been deleted.'));
+			$this->Session->setFlash( 'The article has been deleted.');
 		} 
 		else 
 		{
