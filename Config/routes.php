@@ -22,10 +22,12 @@
 
 
 	foreach ($prefixes as $prefix) {
-		$params = array('prefix' => $prefix, $prefix => true);
-		$indexParams = $params + array('action' => 'index');
-		Router::connect("/{$prefix}/:controller", $indexParams, $options);
-		Router::connect("/{$prefix}/:controller/:action/*", $params, $options);
+	  if( $prefix != 'admin') {
+	    $params = array('prefix' => $prefix, $prefix => true);
+  		$indexParams = $params + array('action' => 'index');
+  		Router::connect("/{$prefix}/:controller", $indexParams, $options);
+  		Router::connect("/{$prefix}/:controller/:action/*", $params, $options);
+	  }
 	}
 
 	Router::connect('/:controller', array('action' => 'index', 'lang' => DEFAULT_LANGUAGE), $options);
