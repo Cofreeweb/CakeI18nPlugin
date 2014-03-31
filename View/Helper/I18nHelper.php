@@ -62,6 +62,26 @@ class I18nHelper extends AppHelper {
     
     return $this->Html->tag( 'ul', implode( "\n", $out));
   }
+  
+/**
+ * Devuelve una URL con el prefijo del idioma
+ *
+ * @param mixed $url CakeURL o string
+ * @return string
+ */
+  public function url( $url)
+  {
+    if( is_array( $url))
+    {
+      $url ['lang'] = $this->request->params ['lang'];
+    }
+    else
+    {
+      $url = '/'. $this->request->params ['lang'] . $url;
+    }
+    
+    return $this->Html->url( $url);
+  }
 	
 /**
  * Displays a list of flags
