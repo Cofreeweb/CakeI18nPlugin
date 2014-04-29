@@ -48,14 +48,7 @@ class I18nFixture extends CakeTestFixture {
  * @access public
  */
 	public $records = array(
-		array(
-			'id' => 'translation-1',
-			'locale' => 'eng',
-			'model' => 'Article',
-			'foreign_key' => 'article-1',
-			'field' => 'title',
-			'content' => 'sample content.'
-		),
+	
 	);
 
 }
