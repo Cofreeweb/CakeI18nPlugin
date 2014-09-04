@@ -11,6 +11,12 @@ App::uses( 'TranslateBehavior', 'Model/Behavior');
 class I18nUtilsBehavior extends TranslateBehavior 
 {
   
+/**
+ * Setea las traducciones en cada campo, con el paradigma [title][spa], [title][eng]
+ * @param Model  $Model
+ * @param [type] $results Los resultados de búsqueda
+ * @return  Los resultados de búsqueda
+ */
   public function setTranslations( Model $Model, $results)
   {
     if( isset( $results [0]))
@@ -28,6 +34,12 @@ class I18nUtilsBehavior extends TranslateBehavior
     return $results;
   }
   
+/**
+ * Ayudante de I18nUtilsBehavior::setTranslations()
+ * @param  Model  $Model  [description]
+ * @param  string $result Los resultados de búsqueda
+ * @return array         Los resultados de búsqueda
+ */
   private function __setTranslation( Model $Model, $result)
   {
     $fields = $Model->Behaviors->Translate->settings [$Model->alias];
