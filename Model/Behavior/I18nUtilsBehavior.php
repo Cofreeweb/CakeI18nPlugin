@@ -44,11 +44,21 @@ class I18nUtilsBehavior extends TranslateBehavior
   {
     $fields = $Model->Behaviors->Translate->settings [$Model->alias];
     
+    $_result = $result;
+
+    $has_alias = false;
+
+    if( isset( $_result [$Model->alias]))
+    {
+      $has_alias = true;
+      $_result = $_result [$Model->alias];
+    }
+
     foreach( $fields as $field => $plural)
     {
       if( isset( $result [$plural]))
       {
-        unset( $result [$Model->alias][$field]);
+        unset( $_result [$field]);
         
         $node = array();
         
@@ -62,8 +72,17 @@ class I18nUtilsBehavior extends TranslateBehavior
           $node [$translate ['locale']] = $translate ['content'];
         }
         
-        $result [$Model->alias][$field] = $node;
+        $_result [$field] = $node;
       }
+    }
+
+    if( $has_alias)
+    {
+      $result [$Model->alias] = $_result;
+    }
+    else
+    {
+      $result = $_result;
     }
     
     return $result;
