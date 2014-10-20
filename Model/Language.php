@@ -31,7 +31,7 @@ class Language extends I18nAppModel
  *
  * @return void
  */
-	public function beforeSave()
+	public function beforeSave( $options = array())
 	{
 	  $L10n = new L10n;
 	  $locale = $L10n->catalog( $this->data [$this->alias]['iso2']);
