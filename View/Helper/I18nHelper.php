@@ -69,7 +69,7 @@ class I18nHelper extends AppHelper {
  * @param mixed $url CakeURL o string
  * @return string
  */
-  public function url( $url)
+  public function url( $url = NULL, $full = false)
   {
     if( is_array( $url))
     {
